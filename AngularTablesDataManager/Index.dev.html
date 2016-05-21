@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Angular Tables Data Manager Application</title>
+
+  <!-- build:css Content/lib.min.css -->
+  <!-- bower:css  -->
+  <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css" />
+  <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
+  <link rel="stylesheet" href="bower_components/angular-loading-bar/src/loading-bar.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:js Scripts/lib.min.js -->
+  <!-- bower:js  -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+  <script src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+  <script src="bower_components/q/q.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+</head>
+<body ng-app="angularTablesDataManager">
+  <toaster-container></toaster-container>
+
+  <section class="container">
+    <div ui-view=""></div>
+  </section>
+
+  <!-- build:js Scripts/app.min.js -->
+  <!-- inject:js -->
+  <script src="/App/app.js"></script>
+  <script src="/App/Commons.js"></script>
+  <script src="/App/Controllers/CitiesController.js"></script>
+  <script src="/App/Models/Cities.js"></script>
+  <script src="/App/Models/city.js"></script>
+  <script src="/App/Models/entity.js"></script>
+  <script src="/App/Models/metadataproperties.js"></script>
+  <script src="/App/Models/metadataproperty.js"></script>
+  <script src="/App/Models/models.js"></script>
+  <script src="/App/Models/Services.js"></script>
+  <script src="/App/Models/WebApiResponse.js"></script>
+  <script src="/App/Services/citiesservice.js"></script>
+  <script src="/App/Services/MetadataService.js"></script>
+  <!-- endinject -->
+  <!-- endbuild -->
+</body>
+</html>

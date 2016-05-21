@@ -1,0 +1,1 @@
+{"version":3,"sources":["Models/Cities.ts"],"names":[],"mappings":"AAMC","file":"Cities.js","sourcesContent":["\r\nmodule AngularTablesDataManagerApp.Models {\r\n    export interface ICity {\r\n        Id: string;\r\n        Name: string;\r\n    }\r\n}\r\n"]}
