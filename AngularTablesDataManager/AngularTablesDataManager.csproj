@@ -137,6 +137,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\Directives\GridColumn.html" />
+    <Content Include="App\Directives\Grid.html" />
+    <Content Include="App\Directives\GridCell.html" />
+    <Content Include="App\Directives\GridList.html" />
+    <Content Include="App\Directives\GridItem.html" />
+    <Content Include="App\Directives\GridRow.html" />
     <Content Include="Global.asax" />
     <Content Include="Index.dev.html" />
     <Content Include="Index.html" />
@@ -185,7 +191,8 @@
     <None Include="App\Controllers\CitiesController.ts" />
     <None Include="App\Models\Cities.ts" />
     <None Include="App\Services\CitiesService.ts" />
-    <Content Include="App\Models\MetadataProperties.ts" />
+    <TypeScriptCompile Include="App\Directives\GridDirective.ts" />
+    <TypeScriptCompile Include="App\Models\Grid.ts" />
     <TypeScriptCompile Include="App\Models\Services.ts" />
     <TypeScriptCompile Include="App\Services\MetadataService.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />
@@ -210,7 +217,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\Directives\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>

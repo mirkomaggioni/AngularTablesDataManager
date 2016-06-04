@@ -1,33 +1,5 @@
 ﻿
 <div ng-show="vm.order == null">
-  <div class="row bootstrap-admin-no-edges-padding" style="margin-top: 10px;">
-    <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <div class="text-muted bootstrap-admin-box-title">
-            {{vm.title}}
-          </div>
-        </div>
-        <div class="panel-body">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th class="col-md-12">
-                  <b><span>Name</span></b>
-                </th>
-              </tr>
-            </thead>
-            <tbody data-ng-repeat="city in vm.cities">
-              <tr>
-                <td>
-                  <span>{{city.Name}}</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+  <grid list="vm.grid" row-model="vm.rowModel" order="Name" save="vm.Save(item)" delete="vm.Delete(item)"></grid>
 </div>
 

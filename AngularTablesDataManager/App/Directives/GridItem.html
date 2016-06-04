@@ -1,0 +1,29 @@
+﻿
+<div class="row bootstrap-admin-no-edges-padding" style="margin-top: 10px;">
+  <div class="col-md-12">
+    <input type="button" id="btn-save" value="Save" class="btn btn-primary" ng-click="Save()" ng-disabled="form.$invalid" />
+    <input type="button" id="btn-delete" value="Delete" class="btn btn-danger" ng-click="Delete()" ng-show="!isNew" />
+    <input type="button" id="btn-close" value="Close" class="btn btn-default" ng-click="Close()" />
+  </div>
+</div>
+<div class="row bootstrap-admin-no-edges-padding" style="margin-top: 10px;">
+  <div class="col-md-12">
+    <form name="form" role="form">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="text-muted bootstrap-admin-box-title">
+            {{item.Name}}
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="form-group" ng-repeat="property in item.Properties">
+            <label for="{{property.Name}}">{{property.Name}}:</label>
+            <input type="text" id="{{property.Name}}" class="form-control" ng-model="property.Value" ng-required="!property.Nullable" />
+          </div>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </form>
+  </div>
+</div>
+

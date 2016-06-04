@@ -1,0 +1,10 @@
+﻿
+<div ng-show="item == null">
+  <grid-list list="list" order="order"></grid-list>
+</div>
+
+<div ng-show="item != null">
+  <grid-item item="item" metadata="list.Columns" is-new="newItem"></grid-item>
+</div>
+
+

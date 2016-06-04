@@ -78,6 +78,7 @@ namespace AngularTablesDataManager.Controller
                 return BadRequest(ModelState);
             }
 
+            city.Id = Guid.NewGuid();
             db.Cities.Add(city);
 
             try

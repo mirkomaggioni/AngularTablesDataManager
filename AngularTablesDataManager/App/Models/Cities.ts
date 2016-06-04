@@ -1,7 +1,6 @@
 ﻿
 module AngularTablesDataManagerApp.Models {
-    export interface ICity {
-        Id: string;
+    export interface ICity extends Models.IEntity {
         Name: string;
     }
 }

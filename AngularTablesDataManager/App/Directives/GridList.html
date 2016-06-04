@@ -1,0 +1,30 @@
+﻿
+<div class="row bootstrap-admin-no-edges-padding" style="margin-top: 10px;">
+  <div class="col-md-12">
+    <input type="button" id="btn-new" value="New" class="btn btn-primary" ng-click="New()" />
+  </div>
+</div>
+<div class="row bootstrap-admin-no-edges-padding" style="margin-top: 10px;">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="text-muted bootstrap-admin-box-title">
+          {{list.Title}}
+        </div>
+      </div>
+      <div class="panel-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th ng-repeat="column in list.Columns" grid-column="column"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="row in list.Rows | orderBy: 'Entity.' + order" grid-row="row"></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

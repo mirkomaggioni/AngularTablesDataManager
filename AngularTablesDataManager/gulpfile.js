@@ -22,6 +22,11 @@ var config = {
   jsBasePath: 'App/',
   ts: 'App/**/*.ts',
   js: 'App/**/*.js',
+  jsRoot: 'App/*.js',
+  jsControllers: 'App/Controllers/*.js',
+  jsDirectives: 'App/Directives/*.js',
+  jsModels: 'App/Models/*.js',
+  jsServices: 'App/Services/*.js',
   dist: './dist',
   jsDist: 'dist/**/*.js',
   indexDev: 'index.dev.html'
@@ -63,7 +68,7 @@ gulp.task('wiredep', ['bower'], function () {
 //Inject
 gulp.task('inject', ['typescript'], function (cb) {
   var target = gulp.src(config.indexDev);
-  var sources = gulp.src([config.js]);
+  var sources = gulp.src([config.jsRoot, config.jsModels, config.jsServices, config.jsDirectives, config.jsControllers]);
 
   return target.pipe(inject(sources))
             .pipe(gulp.dest('.'));
