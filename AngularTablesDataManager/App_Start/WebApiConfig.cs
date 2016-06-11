@@ -14,6 +14,7 @@ namespace AngularTablesDataManager
         {
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<City>("Cities");
+            builder.EntitySet<Zip>("Zips");
             config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
         }
     }

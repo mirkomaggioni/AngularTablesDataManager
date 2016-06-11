@@ -167,6 +167,8 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controller\CitiesController.cs" />
+    <Compile Include="Controller\ZipController.cs" />
+    <Compile Include="DataLayer\Zip.cs" />
     <Compile Include="DataLayer\City.cs" />
     <Compile Include="DataLayer\Context.cs" />
     <Compile Include="Global.asax.cs">
@@ -175,6 +177,14 @@
     <Compile Include="Migrations\201605071603318_CreatingCityTable.cs" />
     <Compile Include="Migrations\201605071603318_CreatingCityTable.Designer.cs">
       <DependentUpon>201605071603318_CreatingCityTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606071723536_CreatingZipTable.cs" />
+    <Compile Include="Migrations\201606071723536_CreatingZipTable.Designer.cs">
+      <DependentUpon>201606071723536_CreatingZipTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606081644059_RenamingZipTable.cs" />
+    <Compile Include="Migrations\201606081644059_RenamingZipTable.Designer.cs">
+      <DependentUpon>201606081644059_RenamingZipTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -190,10 +200,12 @@
     <None Include="App\Commons.ts" />
     <None Include="App\Controllers\CitiesController.ts" />
     <None Include="App\Models\Cities.ts" />
-    <None Include="App\Services\CitiesService.ts" />
+    <None Include="App\Services\Entities\CitiesService.ts" />
+    <TypeScriptCompile Include="App\Directives\FieldDirective.ts" />
     <TypeScriptCompile Include="App\Directives\GridDirective.ts" />
     <TypeScriptCompile Include="App\Models\Grid.ts" />
     <TypeScriptCompile Include="App\Models\Services.ts" />
+    <TypeScriptCompile Include="App\Services\GridService.ts" />
     <TypeScriptCompile Include="App\Services\MetadataService.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui\angular-ui-router.d.ts" />
@@ -214,6 +226,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201605071603318_CreatingCityTable.resx">
       <DependentUpon>201605071603318_CreatingCityTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606071723536_CreatingZipTable.resx">
+      <DependentUpon>201606071723536_CreatingZipTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606081644059_RenamingZipTable.resx">
+      <DependentUpon>201606081644059_RenamingZipTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

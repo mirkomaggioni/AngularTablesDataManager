@@ -27,6 +27,11 @@ var AngularTablesDataManagerApp;
                 this.$scope.Delete(obj);
             };
             GridController.prototype.Close = function () {
+                if (!this.$scope.newItem) {
+                    for (var i = 0; i < this.$scope.item.Properties.length; i++) {
+                        this.$scope.item.Properties[i].Value = this.$scope.item.Entity[this.$scope.item.Properties[i].Name];
+                    }
+                }
                 this.$scope.item = null;
             };
             return GridController;

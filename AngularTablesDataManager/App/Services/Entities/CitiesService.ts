@@ -1,9 +1,9 @@
-﻿/// <reference path="../app.ts" />
-/// <reference path="../commons.ts" />
-/// <reference path="../models/cities.ts" />
-/// <reference path="../models/services.ts" />
-/// <reference path="metadataservice.ts" />
-/// <reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
+﻿/// <reference path="../../app.ts" />
+/// <reference path="../../commons.ts" />
+/// <reference path="../../models/cities.ts" />
+/// <reference path="../../models/services.ts" />
+/// <reference path="../gridservice.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
 
 module AngularTablesDataManagerApp.Services {
     import ngr = ng.resource;
@@ -15,16 +15,15 @@ module AngularTablesDataManagerApp.Services {
         create(city: models.ICity): ngr.IResource<models.ICity>;
     }
 
-    export class CitiesService implements models.IService {
-        private entitySet: string = 'Cities';
-        private entityName: string = 'City';
+    export class CitiesService extends services.GridService {
         private resource: ICitiesResourceClass;
         private $q: ng.IQService;
-        private metadataService: services.MetadataService;
 
-        constructor($resource: ngr.IResourceService, $q: ng.IQService, MetadataService: services.MetadataService) {
+        constructor($resource: ngr.IResourceService, $q: ng.IQService, metadataService: services.MetadataService) {
+            super('Cities', 'City', metadataService);
+
             this.$q = $q;
-            this.metadataService = MetadataService;
+            this.metadataService = metadataService;
 
             this.resource = <ICitiesResourceClass>$resource('/odata/' + this.entitySet + "(guid':key')", { key: '@Id' }, {
                 get: { method: 'GET' },
@@ -52,14 +51,14 @@ module AngularTablesDataManagerApp.Services {
             return this.resource.delete({ key: city.Id });
         }
 
-        public getAll() {
-            var datas: ngr.IResourceArray<ngr.IResource<models.ICity>>;
+        public getGridData(Columns: Array<models.MetadataProperty>): ng.IPromise<Array<models.Row>> {
+            var datas: Array<models.ICity>;
             var defer: ng.IDeferred<any> = this.$q.defer();
 
             this.resource.query().$promise.then((data: any) => {
                 datas = data["value"];
 
-                return defer.resolve(datas);
+                return defer.resolve(super.getData(Columns, <Array<models.IEntity>>datas));
             }, (error) => {
                 return defer.reject(error);
             });
@@ -67,55 +66,16 @@ module AngularTablesDataManagerApp.Services {
             return defer.promise;
         }
 
-        public getMetadata(columns: Array<string>): ng.IPromise<Array<models.MetadataProperty>> {
-            return this.metadataService.getMetadata(this.entitySet, columns);
-        }
-
-        public getGridData(Columns: Array<models.MetadataProperty>): ng.IPromise<Array<models.Row>> {
-            var gridData: Array<models.Row> = new Array<models.Row>();
-            var rowData: Array<models.RowProperty>;
-            var defer: ng.IDeferred<any> = this.$q.defer();
-
-            this.getAll().then((data) => {
-                for (var i = 0; i < data.length; i++) {
-                    var city: models.ICity = data[i];
-                    rowData = new Array<models.RowProperty>();
-
-                    for (var a = 0; a < Columns.length; a++) {
-                        rowData.push(new models.RowProperty(Columns[a].Name, (<any>city)[Columns[a].Name], Columns[a].Nullable));
-                    }
-
-                    gridData.push(new models.Row(city, this.entityName, rowData));
-                }
-
-                return defer.resolve(gridData);
-            }, (error) => {
-                return defer.reject(error);
-            });
-
-            return defer.promise;
-        }
-
-        public createGridData(Columns: Array<models.MetadataProperty>) {
+        public createGridData(Columns: Array<models.MetadataProperty>): models.Row {
             var entity: models.ICity = { Id: commons.Constants.GuidEmpty, Name: '' };
-            var datas: Array<models.RowProperty> = new Array<models.RowProperty>();
-            var item: models.Row = new models.Row(entity, 'City', datas);
 
-            for (var a = 0; a < Columns.length; a++) {
-                datas.push(new models.RowProperty(Columns[a].Name, '', Columns[a].Nullable));
-            }
-
-            return item;
+            return super.createData(Columns, entity);
         }
 
         public saveGridData(item: models.Row) {
             var defer: ng.IDeferred<any> = this.$q.defer();
 
-            for (var i = 0; i < item.Properties.length; i++) {
-                (<any>item.Entity)[item.Properties[i].Name] = item.Properties[i].Value;
-            }
-
-            this.save(<models.ICity>item.Entity).$promise.then((data: any) => {
+            this.save(<models.ICity>super.saveData(item)).$promise.then((data: any) => {
                 item.Entity = data;
                 return defer.resolve(item);
             }, (error) => {

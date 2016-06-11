@@ -18,6 +18,7 @@ module AngularTablesDataManagerApp.Directives {
         New(): void;
         Save(item: IGridItem): void;
         Delete(item: IGridItem): void;
+        Close(): void;
     }
 
     class GridController {
@@ -51,6 +52,12 @@ module AngularTablesDataManagerApp.Directives {
         }
 
         public Close() {
+            if (!this.$scope.newItem) {
+                for (var i = 0; i < this.$scope.item.Properties.length; i++) {
+                    this.$scope.item.Properties[i].Value = (<any>this.$scope.item.Entity)[this.$scope.item.Properties[i].Name];
+                }
+            }
+
             this.$scope.item = null;
         }
     }

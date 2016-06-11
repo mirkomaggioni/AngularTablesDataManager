@@ -2,7 +2,7 @@
 /// <reference path="../../scripts/typings/angularjs-toaster/angularjs-toaster.d.ts" />
 /// <reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
 /// <reference path="../models/grid.ts" />
-/// <reference path="../services/citiesservice.ts" />
+/// <reference path="../services/entities/citiesservice.ts" />
 var AngularTablesDataManagerApp;
 (function (AngularTablesDataManagerApp) {
     var Controllers;

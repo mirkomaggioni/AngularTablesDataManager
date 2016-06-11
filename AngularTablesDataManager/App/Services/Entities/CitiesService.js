@@ -1,21 +1,26 @@
-/// <reference path="../app.ts" />
-/// <reference path="../commons.ts" />
-/// <reference path="../models/cities.ts" />
-/// <reference path="../models/services.ts" />
-/// <reference path="metadataservice.ts" />
-/// <reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../app.ts" />
+/// <reference path="../../commons.ts" />
+/// <reference path="../../models/cities.ts" />
+/// <reference path="../../models/services.ts" />
+/// <reference path="../gridservice.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var AngularTablesDataManagerApp;
 (function (AngularTablesDataManagerApp) {
     var Services;
     (function (Services) {
         var commons = AngularTablesDataManagerApp.Commons;
-        var models = AngularTablesDataManagerApp.Models;
-        var CitiesService = (function () {
-            function CitiesService($resource, $q, MetadataService) {
-                this.entitySet = 'Cities';
-                this.entityName = 'City';
+        var services = AngularTablesDataManagerApp.Services;
+        var CitiesService = (function (_super) {
+            __extends(CitiesService, _super);
+            function CitiesService($resource, $q, metadataService) {
+                _super.call(this, 'Cities', 'City', metadataService);
                 this.$q = $q;
-                this.metadataService = MetadataService;
+                this.metadataService = metadataService;
                 this.resource = $resource('/odata/' + this.entitySet + "(guid':key')", { key: '@Id' }, {
                     get: { method: 'GET' },
                     create: { method: 'POST', isArray: false, url: '/odata/' + this.entitySet },
@@ -38,35 +43,13 @@ var AngularTablesDataManagerApp;
             CitiesService.prototype.delete = function (city) {
                 return this.resource.delete({ key: city.Id });
             };
-            CitiesService.prototype.getAll = function () {
+            CitiesService.prototype.getGridData = function (Columns) {
+                var _this = this;
                 var datas;
                 var defer = this.$q.defer();
                 this.resource.query().$promise.then(function (data) {
                     datas = data["value"];
-                    return defer.resolve(datas);
-                }, function (error) {
-                    return defer.reject(error);
-                });
-                return defer.promise;
-            };
-            CitiesService.prototype.getMetadata = function (columns) {
-                return this.metadataService.getMetadata(this.entitySet, columns);
-            };
-            CitiesService.prototype.getGridData = function (Columns) {
-                var _this = this;
-                var gridData = new Array();
-                var rowData;
-                var defer = this.$q.defer();
-                this.getAll().then(function (data) {
-                    for (var i = 0; i < data.length; i++) {
-                        var city = data[i];
-                        rowData = new Array();
-                        for (var a = 0; a < Columns.length; a++) {
-                            rowData.push(new models.RowProperty(Columns[a].Name, city[Columns[a].Name], Columns[a].Nullable));
-                        }
-                        gridData.push(new models.Row(city, _this.entityName, rowData));
-                    }
-                    return defer.resolve(gridData);
+                    return defer.resolve(_super.prototype.getData.call(_this, Columns, datas));
                 }, function (error) {
                     return defer.reject(error);
                 });
@@ -74,20 +57,11 @@ var AngularTablesDataManagerApp;
             };
             CitiesService.prototype.createGridData = function (Columns) {
                 var entity = { Id: commons.Constants.GuidEmpty, Name: '' };
-                var datas = new Array();
-                //datas.push({ Name: 'Name', Value: '', Nullable: false });
-                var item = new models.Row(entity, 'City', datas);
-                for (var a = 0; a < Columns.length; a++) {
-                    datas.push(new models.RowProperty(Columns[a].Name, '', Columns[a].Nullable));
-                }
-                return item;
+                return _super.prototype.createData.call(this, Columns, entity);
             };
             CitiesService.prototype.saveGridData = function (item) {
                 var defer = this.$q.defer();
-                for (var i = 0; i < item.Properties.length; i++) {
-                    item.Entity[item.Properties[i].Name] = item.Properties[i].Value;
-                }
-                this.save(item.Entity).$promise.then(function (data) {
+                this.save(_super.prototype.saveData.call(this, item)).$promise.then(function (data) {
                     item.Entity = data;
                     return defer.resolve(item);
                 }, function (error) {
@@ -108,7 +82,7 @@ var AngularTablesDataManagerApp;
                 return function (r, $q, MetadataService) { return new CitiesService(r, $q, MetadataService); };
             };
             return CitiesService;
-        }());
+        }(services.GridService));
         Services.CitiesService = CitiesService;
         AngularTablesDataManagerApp.AngularTablesDataManager.module.factory('CitiesService', ['$resource', '$q', 'MetadataService', CitiesService.factory()]);
     })(Services = AngularTablesDataManagerApp.Services || (AngularTablesDataManagerApp.Services = {}));

@@ -8,12 +8,6 @@ module AngularTablesDataManagerApp.Models {
     export interface IEntity {
         Id: string;
     }
-
-    export interface IService {
-        getMetadata(columns: Array<string>): ng.IPromise<Array<models.MetadataProperty>>;
-        getGridData(Columns: Array<models.MetadataProperty>): ng.IPromise<Array<models.Row>>;
-        saveGridData(item: models.Row): ng.IPromise<models.Row>;
-    } 
 }
 
 

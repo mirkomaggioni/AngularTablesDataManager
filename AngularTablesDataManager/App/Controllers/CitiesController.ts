@@ -2,7 +2,7 @@
 /// <reference path="../../scripts/typings/angularjs-toaster/angularjs-toaster.d.ts" />
 /// <reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
 /// <reference path="../models/grid.ts" />
-/// <reference path="../services/citiesservice.ts" />
+/// <reference path="../services/entities/citiesservice.ts" />
 
 module AngularTablesDataManagerApp.Controllers {
     import ngr = ng.resource;
@@ -67,7 +67,6 @@ module AngularTablesDataManagerApp.Controllers {
         }
 
         public Delete(item: models.Row) {
-
             var vm = this;
             this.citiesService.deleteGridData(item).then((data: any) => {
                 var index = vm.grid.Rows.indexOf(item);

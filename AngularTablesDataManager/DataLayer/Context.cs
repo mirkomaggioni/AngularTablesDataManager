@@ -10,5 +10,6 @@ namespace AngularTablesDataManager.DataLayer
         }
 
         public DbSet<City> Cities { get; set; }
+        public DbSet<Zip> Zips { get; set; }
     }
 }
