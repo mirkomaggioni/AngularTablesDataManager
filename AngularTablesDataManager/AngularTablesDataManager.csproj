@@ -143,6 +143,7 @@
     <Content Include="App\Directives\GridList.html" />
     <Content Include="App\Directives\GridItem.html" />
     <Content Include="App\Directives\GridRow.html" />
+    <Content Include="App\Views\Zips.html" />
     <Content Include="Global.asax" />
     <Content Include="Index.dev.html" />
     <Content Include="Index.html" />
@@ -167,7 +168,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controller\CitiesController.cs" />
-    <Compile Include="Controller\ZipController.cs" />
+    <Compile Include="Controller\ZipsController.cs" />
     <Compile Include="DataLayer\Zip.cs" />
     <Compile Include="DataLayer\City.cs" />
     <Compile Include="DataLayer\Context.cs" />
@@ -201,10 +202,13 @@
     <None Include="App\Controllers\CitiesController.ts" />
     <None Include="App\Models\Cities.ts" />
     <None Include="App\Services\Entities\CitiesService.ts" />
+    <Content Include="App\Controllers\ZipsController.ts" />
     <TypeScriptCompile Include="App\Directives\FieldDirective.ts" />
     <TypeScriptCompile Include="App\Directives\GridDirective.ts" />
+    <Content Include="App\Models\Zips.ts" />
     <TypeScriptCompile Include="App\Models\Grid.ts" />
     <TypeScriptCompile Include="App\Models\Services.ts" />
+    <Content Include="App\Services\Entities\ZipsService.ts" />
     <TypeScriptCompile Include="App\Services\GridService.ts" />
     <TypeScriptCompile Include="App\Services\MetadataService.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />

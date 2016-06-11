@@ -18,7 +18,7 @@ module AngularTablesDataManagerApp.Services {
         }
 
         public getMetadata(columns: Array<string>): ng.IPromise<Array<models.MetadataProperty>> {
-            return this.metadataService.getMetadata(this.entitySet, columns);
+            return this.metadataService.getMetadata(this.entityName, columns);
         }
 
         public getData(Columns: Array<models.MetadataProperty>, Datas: Array<models.IEntity>): Array<models.Row> {

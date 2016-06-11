@@ -2,70 +2,70 @@
 /// <reference path="../../scripts/typings/angularjs-toaster/angularjs-toaster.d.ts" />
 /// <reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
 /// <reference path="../models/grid.ts" />
-/// <reference path="../services/entities/citiesservice.ts" />
+/// <reference path="../services/entities/zipsservice.ts" />
 var AngularTablesDataManagerApp;
 (function (AngularTablesDataManagerApp) {
     var Controllers;
     (function (Controllers) {
         var commons = AngularTablesDataManagerApp.Commons;
         var models = AngularTablesDataManagerApp.Models;
-        var CitiesController = (function () {
-            function CitiesController(toaster, CitiesService) {
-                this.citiesService = CitiesService;
+        var ZipsController = (function () {
+            function ZipsController(toaster, ZipsService) {
+                this.zipsService = ZipsService;
                 this.constant = commons.Constants;
                 this.toaster = toaster;
                 this.grid = new models.Grid();
-                this.grid.Title = 'Cities';
+                this.grid.Title = 'Zips';
                 this.Load();
             }
-            CitiesController.prototype.Load = function () {
+            ZipsController.prototype.Load = function () {
                 var _this = this;
-                var columns = new Array('Name');
+                var columns = new Array('Code');
                 var vm = this;
-                this.citiesService.getMetadata(columns).then(function (data) {
+                this.zipsService.getMetadata(columns).then(function (data) {
                     vm.grid.Columns = data;
-                    vm.rowModel = _this.citiesService.createGridData(data);
-                    _this.citiesService.getGridData(data).then(function (data) {
+                    vm.rowModel = _this.zipsService.createGridData(data);
+                    _this.zipsService.getGridData(data).then(function (data) {
                         vm.grid.Rows = data;
-                        vm.toaster.success('Cities loaded successfully.');
+                        vm.toaster.success('Zips loaded successfully.');
                         return;
                     }, function (error) {
-                        vm.toaster.error('Error loading cities', error.message);
+                        vm.toaster.error('Error loading zips', error.message);
                     });
                 }, function (error) {
-                    vm.toaster.error('Error loading cities metadata', error.data.message);
+                    vm.toaster.error('Error loading zips metadata', error.data.message);
                 });
             };
-            CitiesController.prototype.Save = function (item) {
+            ZipsController.prototype.Save = function (item) {
                 var _this = this;
                 var vm = this;
                 var isNew = false;
                 if (item.Entity.Id == commons.Constants.GuidEmpty)
                     isNew = true;
-                this.citiesService.saveGridData(item).then(function (data) {
+                this.zipsService.saveGridData(item).then(function (data) {
                     if (isNew)
                         vm.grid.Rows.push(data);
-                    _this.toaster.success("City saved successfully.");
+                    _this.toaster.success("Zip saved successfully.");
                 }, function (error) {
-                    _this.toaster.error("Error saving city", error.data.message);
+                    _this.toaster.error("Error saving zip", error.data.message);
                 });
             };
-            CitiesController.prototype.Delete = function (item) {
+            ZipsController.prototype.Delete = function (item) {
                 var _this = this;
                 var vm = this;
-                this.citiesService.deleteGridData(item).then(function (data) {
+                this.zipsService.deleteGridData(item).then(function (data) {
                     var index = vm.grid.Rows.indexOf(item);
                     vm.grid.Rows.splice(index, 1);
-                    _this.toaster.success("City deleted successfully.");
+                    _this.toaster.success("Zip deleted successfully.");
                 }, function (error) {
-                    _this.toaster.error("Error deleting city", error.data.message);
+                    _this.toaster.error("Error deleting zip", error.data.message);
                 });
             };
-            return CitiesController;
+            return ZipsController;
         }());
-        Controllers.CitiesController = CitiesController;
-        AngularTablesDataManagerApp.AngularTablesDataManager.module.controller('CitiesController', CitiesController);
+        Controllers.ZipsController = ZipsController;
+        AngularTablesDataManagerApp.AngularTablesDataManager.module.controller('ZipsController', ZipsController);
     })(Controllers = AngularTablesDataManagerApp.Controllers || (AngularTablesDataManagerApp.Controllers = {}));
 })(AngularTablesDataManagerApp || (AngularTablesDataManagerApp = {}));
 
-//# sourceMappingURL=CitiesController.js.map
+//# sourceMappingURL=ZipsController.js.map

@@ -21,7 +21,7 @@ module AngularTablesDataManagerApp.Services {
 
             var req = {
                 method: 'GET',
-                url: '/odata/$metadata#' + entityName
+                url: '/odata/$metadata'
             };
 
             var vm = this;
@@ -31,7 +31,7 @@ module AngularTablesDataManagerApp.Services {
                 var xml: JQuery = $(xmlDoc);
                 var properties: Array<models.MetadataProperty> = new Array<models.MetadataProperty>();
 
-                xml.find('EntityType').find('Property').each(function () {
+                xml.find('EntityType[Name="'+ entityName +'"]').find('Property').each(function () {
                     if (vm.$filter('filter')(columns, { $: $(this).attr('Name') }).length > 0) {
                         var metadataProperty: models.MetadataProperty = new models.MetadataProperty();
                         metadataProperty.Name = $(this).attr('Name');

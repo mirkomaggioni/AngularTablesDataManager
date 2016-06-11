@@ -13,7 +13,7 @@ var AngularTablesDataManagerApp;
                 this.metadataService = metadataService;
             }
             GridService.prototype.getMetadata = function (columns) {
-                return this.metadataService.getMetadata(this.entitySet, columns);
+                return this.metadataService.getMetadata(this.entityName, columns);
             };
             GridService.prototype.getData = function (Columns, Datas) {
                 var gridData = new Array();

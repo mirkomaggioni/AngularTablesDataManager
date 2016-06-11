@@ -33,6 +33,10 @@
   <toaster-container></toaster-container>
 
   <section class="container">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#cities" aria-controls="cities" role="tab" data-toggle="tab">Cities</a></li>
+      <li role="presentation"><a href="#zips" aria-controls="cities" role="tab" data-toggle="tab">Zip codes</a></li>
+    </ul>
     <div ui-view=""></div>
   </section>
 
@@ -43,12 +47,15 @@
   <script src="/App/Models/Cities.js"></script>
   <script src="/App/Models/Grid.js"></script>
   <script src="/App/Models/Services.js"></script>
+  <script src="/App/Models/Zips.js"></script>
   <script src="/App/Services/GridService.js"></script>
   <script src="/App/Services/MetadataService.js"></script>
   <script src="/App/Services/Entities/CitiesService.js"></script>
+  <script src="/App/Services/Entities/ZipsService.js"></script>
   <script src="/App/Directives/FieldDirective.js"></script>
   <script src="/App/Directives/GridDirective.js"></script>
   <script src="/App/Controllers/CitiesController.js"></script>
+  <script src="/App/Controllers/ZipsController.js"></script>
   <!-- endinject -->
   <!-- endbuild -->
 </body>

@@ -15,6 +15,11 @@ var AngularTablesDataManagerApp;
             url: '/cities',
             templateUrl: '/app/views/cities.html',
             controller: 'CitiesController as vm'
+        })
+            .state('Zips', {
+            url: '/zips',
+            templateUrl: '/app/views/zips.html',
+            controller: 'ZipsController as vm'
         });
     });
 })(AngularTablesDataManagerApp || (AngularTablesDataManagerApp = {}));

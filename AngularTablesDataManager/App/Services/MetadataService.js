@@ -15,7 +15,7 @@ var AngularTablesDataManagerApp;
                 var defer = this.$q.defer();
                 var req = {
                     method: 'GET',
-                    url: '/odata/$metadata#' + entityName
+                    url: '/odata/$metadata'
                 };
                 var vm = this;
                 this.$http(req).then(function (result) {
@@ -23,7 +23,7 @@ var AngularTablesDataManagerApp;
                     var xmlDoc = $.parseXML(data);
                     var xml = $(xmlDoc);
                     var properties = new Array();
-                    xml.find('EntityType').find('Property').each(function () {
+                    xml.find('EntityType[Name="' + entityName + '"]').find('Property').each(function () {
                         if (vm.$filter('filter')(columns, { $: $(this).attr('Name') }).length > 0) {
                             var metadataProperty = new models.MetadataProperty();
                             metadataProperty.Name = $(this).attr('Name');

@@ -15,25 +15,25 @@ using AngularTablesDataManager.DataLayer;
 
 namespace AngularTablesDataManager.Controller
 {
-    public class ZipController : ODataController
+    public class ZipsController : ODataController
     {
         private Context db = new Context();
 
-        // GET: odata/Zip
+        // GET: odata/Zips
         [EnableQuery]
-        public IQueryable<Zip> GetZip()
+        public IQueryable<Zip> GetZips()
         {
             return db.Zips;
         }
 
-        // GET: odata/Zip(5)
+        // GET: odata/Zips(5)
         [EnableQuery]
         public SingleResult<Zip> GetZip([FromODataUri] Guid key)
         {
             return SingleResult.Create(db.Zips.Where(zip => zip.Id == key));
         }
 
-        // PUT: odata/Zip(5)
+        // PUT: odata/Zips(5)
         public async Task<IHttpActionResult> Put([FromODataUri] Guid key, Delta<Zip> patch)
         {
             Validate(patch.GetEntity());
@@ -70,7 +70,7 @@ namespace AngularTablesDataManager.Controller
             return Updated(zip);
         }
 
-        // POST: odata/Zip
+        // POST: odata/Zips
         public async Task<IHttpActionResult> Post(Zip zip)
         {
             if (!ModelState.IsValid)
@@ -100,7 +100,7 @@ namespace AngularTablesDataManager.Controller
             return Created(zip);
         }
 
-        // PATCH: odata/Zip(5)
+        // PATCH: odata/Zips(5)
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch([FromODataUri] Guid key, Delta<Zip> patch)
         {
@@ -138,7 +138,7 @@ namespace AngularTablesDataManager.Controller
             return Updated(zip);
         }
 
-        // DELETE: odata/Zip(5)
+        // DELETE: odata/Zips(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] Guid key)
         {
             Zip zip = await db.Zips.FindAsync(key);

@@ -4,52 +4,20 @@
   <meta charset="utf-8" />
   <title>Angular Tables Data Manager Application</title>
 
-  <!-- build:css Content/lib.min.css -->
-  <!-- bower:css  -->
-  <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css" />
-  <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
-  <link rel="stylesheet" href="bower_components/angular-loading-bar/src/loading-bar.css" />
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-  <!-- endbower -->
-  <!-- endbuild -->
-  <!-- build:js Scripts/lib.min.js -->
-  <!-- bower:js  -->
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="bower_components/angular-animate/angular-animate.js"></script>
-  <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
-  <script src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
-  <script src="bower_components/jquery/dist/jquery.js"></script>
-  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-  <script src="bower_components/jquery-ui/jquery-ui.js"></script>
-  <script src="bower_components/q/q.js"></script>
-  <script src="bower_components/angular-resource/angular-resource.js"></script>
-  <!-- endbower -->
-  <!-- endbuild -->
+  <link rel="stylesheet" href="Content/lib-0e65e62a3b.min.css">
+  <script src="Scripts/lib-5f5fb72dff.min.js"></script>
 </head>
 <body ng-app="angularTablesDataManager">
   <toaster-container></toaster-container>
 
   <section class="container">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#cities" aria-controls="cities" role="tab" data-toggle="tab">Cities</a></li>
+      <li role="presentation"><a href="#zips" aria-controls="cities" role="tab" data-toggle="tab">Zip codes</a></li>
+    </ul>
     <div ui-view=""></div>
   </section>
 
-  <!-- build:js Scripts/app.min.js -->
-  <!-- inject:js -->
-  <script src="/App/app.js"></script>
-  <script src="/App/Commons.js"></script>
-  <script src="/App/Models/Cities.js"></script>
-  <script src="/App/Models/Grid.js"></script>
-  <script src="/App/Models/Services.js"></script>
-  <script src="/App/Services/GridService.js"></script>
-  <script src="/App/Services/MetadataService.js"></script>
-  <script src="/App/Services/Entities/CitiesService.js"></script>
-  <script src="/App/Directives/FieldDirective.js"></script>
-  <script src="/App/Directives/GridDirective.js"></script>
-  <script src="/App/Controllers/CitiesController.js"></script>
-  <!-- endinject -->
-  <!-- endbuild -->
+  <script src="Scripts/app-df435bf9b8.min.js"></script>
 </body>
 </html>

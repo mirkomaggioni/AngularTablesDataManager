@@ -2,7 +2,7 @@
 /// <reference path="../../scripts/typings/angularjs-toaster/angularjs-toaster.d.ts" />
 /// <reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
 /// <reference path="../models/grid.ts" />
-/// <reference path="../services/entities/citiesservice.ts" />
+/// <reference path="../services/entities/zipsservice.ts" />
 
 module AngularTablesDataManagerApp.Controllers {
     import ngr = ng.resource;
@@ -10,42 +10,42 @@ module AngularTablesDataManagerApp.Controllers {
     import models = AngularTablesDataManagerApp.Models;
     import services = AngularTablesDataManagerApp.Services;
 
-    export class CitiesController {
+    export class ZipsController {
         grid: models.Grid;
         rowModel: models.Row;
         toaster: ngtoaster.IToasterService;
 
-        private citiesService: services.CitiesService;
+        private zipsService: services.ZipsService;
         private constant: commons.Constants;
 
-        constructor(toaster: ngtoaster.IToasterService, CitiesService: services.CitiesService) {
-            this.citiesService = CitiesService;
+        constructor(toaster: ngtoaster.IToasterService, ZipsService: services.ZipsService) {
+            this.zipsService = ZipsService;
             this.constant = commons.Constants;
             this.toaster = toaster;
 
             this.grid = new models.Grid();
-            this.grid.Title = 'Cities';
+            this.grid.Title = 'Zips';
             this.Load();
         }
 
         private Load() {
-            var columns: Array<string> = new Array<string>('Name');
+            var columns: Array<string> = new Array<string>('Code');
             var vm = this;
 
-            this.citiesService.getMetadata(columns).then((data) => {
+            this.zipsService.getMetadata(columns).then((data) => {
                 vm.grid.Columns = data;
-                vm.rowModel = this.citiesService.createGridData(data);
+                vm.rowModel = this.zipsService.createGridData(data);
 
-                this.citiesService.getGridData(data).then((data) => {
+                this.zipsService.getGridData(data).then((data) => {
                     vm.grid.Rows = data;
-                    vm.toaster.success('Cities loaded successfully.');
+                    vm.toaster.success('Zips loaded successfully.');
                     return;
                 }, (error) => {
-                    vm.toaster.error('Error loading cities', error.message);
+                    vm.toaster.error('Error loading zips', error.message);
                 });
 
             }, (error) => {
-                vm.toaster.error('Error loading cities metadata', error.data.message);
+                vm.toaster.error('Error loading zips metadata', error.data.message);
             });
         }
 
@@ -56,28 +56,28 @@ module AngularTablesDataManagerApp.Controllers {
             if (item.Entity.Id == commons.Constants.GuidEmpty)
                 isNew = true;
 
-            this.citiesService.saveGridData(item).then((data: models.Row) => {
+            this.zipsService.saveGridData(item).then((data: models.Row) => {
                 if (isNew)
                     vm.grid.Rows.push(data);
 
-                this.toaster.success("City saved successfully.");
+                this.toaster.success("Zip saved successfully.");
             }, (error: any) => {
-                this.toaster.error("Error saving city", error.data.message);
+                this.toaster.error("Error saving zip", error.data.message);
             });
         }
 
         public Delete(item: models.Row) {
             var vm = this;
-            this.citiesService.deleteGridData(item).then((data: any) => {
+            this.zipsService.deleteGridData(item).then((data: any) => {
                 var index = vm.grid.Rows.indexOf(item);
                 vm.grid.Rows.splice(index, 1);
 
-                this.toaster.success("City deleted successfully.");
+                this.toaster.success("Zip deleted successfully.");
             }, (error: any) => {
-                this.toaster.error("Error deleting city", error.data.message);
+                this.toaster.error("Error deleting zip", error.data.message);
             });
         }
     }
 
-    AngularTablesDataManager.module.controller('CitiesController', CitiesController);
+    AngularTablesDataManager.module.controller('ZipsController', ZipsController);
 }
