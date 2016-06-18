@@ -13,7 +13,7 @@ var AngularTablesDataManagerApp;
                     tipology: '='
                 };
                 this.link = function (scope, element, attrs) {
-                    _this.fieldConfigurationsService.getFieldConfiguration(scope.entityName, scope.tipology.Name).then(function (data) {
+                    _this.fieldConfigurationsService.getFieldConfigurationTipology(scope.entityName, scope.tipology.Name).then(function (data) {
                         var tipology = data;
                         if (tipology == '') {
                             tipology = scope.tipology.Type;
@@ -21,7 +21,10 @@ var AngularTablesDataManagerApp;
                         if (tipology == 'Edm.String') {
                             element.attr('type', 'text');
                         }
-                        else if (scope.tipology.Type.toLowerCase().indexOf('int') != -1) {
+                        else if (tipology.toLowerCase().indexOf('radio') != -1) {
+                            element.attr('type', 'radio');
+                        }
+                        else if (tipology.toLowerCase().indexOf('int') != -1) {
                             element.attr('type', 'number');
                         }
                     });

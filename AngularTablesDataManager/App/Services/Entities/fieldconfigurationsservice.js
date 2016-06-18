@@ -36,30 +36,62 @@ var AngularTablesDataManagerApp;
             FieldConfigurationsService.prototype.delete = function (fieldConfiguration) {
                 return this.resource.delete({ key: fieldConfiguration.Id });
             };
+            FieldConfigurationsService.prototype.getFieldConfigurationTipology = function (entityName, fieldName) {
+                var defer = this.$q.defer();
+                this.getFieldConfiguration(entityName, fieldName).then(function (data) {
+                    if (data != null) {
+                        defer.resolve(data.Tipology);
+                    }
+                    else {
+                        defer.resolve('');
+                    }
+                }, function (error) {
+                    defer.reject(error);
+                });
+                return defer.promise;
+            };
+            FieldConfigurationsService.prototype.getFieldValues = function (entityName, fieldName) {
+                var defer = this.$q.defer();
+                var vm = this;
+                this.getFieldConfiguration(entityName, fieldName).then(function (data) {
+                    if (data != null && data.Values != null && data.Values != "") {
+                        defer.resolve(data.Values.split(";"));
+                    }
+                    else {
+                        defer.resolve(new Array());
+                    }
+                }, function (error) {
+                    defer.reject(error);
+                });
+                if (this.fieldConfigurations) {
+                }
+                else {
+                }
+                return defer.promise;
+            };
             FieldConfigurationsService.prototype.getFieldConfiguration = function (entityName, fieldName) {
                 var defer = this.$q.defer();
                 var vm = this;
                 if (this.fieldConfigurations == null) {
                     vm.resource.query().$promise.then(function (data) {
                         vm.fieldConfigurations = data["value"];
-                        defer.resolve(vm.getFieldTipology(entityName, fieldName));
+                        defer.resolve(vm.getField(entityName, fieldName));
                     }, function (error) {
                         defer.reject(error);
                     });
                 }
                 else {
-                    //return <ng.IPromise<string>><any>defer.resolve(vm.getFieldTipology(entityName, fieldName));
-                    defer.resolve(vm.getFieldTipology(entityName, fieldName));
+                    defer.resolve(vm.getField(entityName, fieldName));
                 }
                 return defer.promise;
             };
-            FieldConfigurationsService.prototype.getFieldTipology = function (entityName, fieldName) {
+            FieldConfigurationsService.prototype.getField = function (entityName, fieldName) {
                 var fieldConfigurations = this.$filter('filter')(this.fieldConfigurations, { 'Entity': entityName, 'Field': fieldName });
                 if (fieldConfigurations.length > 0) {
-                    return fieldConfigurations[0].Tipology;
+                    return fieldConfigurations[0];
                 }
                 else {
-                    return '';
+                    return null;
                 }
             };
             FieldConfigurationsService.factory = function () {

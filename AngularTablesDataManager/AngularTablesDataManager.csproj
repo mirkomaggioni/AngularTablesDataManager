@@ -193,6 +193,14 @@
     <Compile Include="Migrations\201606151443292_CreatingFieldConfigurationTable.Designer.cs">
       <DependentUpon>201606151443292_CreatingFieldConfigurationTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606180732469_UpdatingFieldConfigurationTable.cs" />
+    <Compile Include="Migrations\201606180732469_UpdatingFieldConfigurationTable.Designer.cs">
+      <DependentUpon>201606180732469_UpdatingFieldConfigurationTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606180817360_UpdatingFieldConfigurationTable1.cs" />
+    <Compile Include="Migrations\201606180817360_UpdatingFieldConfigurationTable1.Designer.cs">
+      <DependentUpon>201606180817360_UpdatingFieldConfigurationTable1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -247,6 +255,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606151443292_CreatingFieldConfigurationTable.resx">
       <DependentUpon>201606151443292_CreatingFieldConfigurationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606180732469_UpdatingFieldConfigurationTable.resx">
+      <DependentUpon>201606180732469_UpdatingFieldConfigurationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606180817360_UpdatingFieldConfigurationTable1.resx">
+      <DependentUpon>201606180817360_UpdatingFieldConfigurationTable1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

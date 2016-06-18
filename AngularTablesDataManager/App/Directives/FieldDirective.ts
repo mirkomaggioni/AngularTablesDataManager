@@ -19,7 +19,7 @@ module AngularTablesDataManagerApp.Directives {
         };
         public link = (scope: IFieldDirectiveScope, element: JQuery, attrs: IArguments) => {
 
-            this.fieldConfigurationsService.getFieldConfiguration(scope.entityName, scope.tipology.Name).then((data) => {
+            this.fieldConfigurationsService.getFieldConfigurationTipology(scope.entityName, scope.tipology.Name).then((data) => {
                 var tipology: string = data;
                 if (tipology == '') {
                     tipology = scope.tipology.Type;
@@ -28,7 +28,10 @@ module AngularTablesDataManagerApp.Directives {
                 if (tipology == 'Edm.String') {
                     element.attr('type', 'text');
                 }
-                else if (scope.tipology.Type.toLowerCase().indexOf('int') != -1) {
+                else if (tipology.toLowerCase().indexOf('radio') != -1) {
+                    element.attr('type', 'radio');
+                }
+                else if (tipology.toLowerCase().indexOf('int') != -1) {
                     element.attr('type', 'number');
                 }
             });

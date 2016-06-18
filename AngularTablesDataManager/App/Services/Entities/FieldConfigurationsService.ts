@@ -53,32 +53,75 @@ module AngularTablesDataManagerApp.Services {
             return this.resource.delete({ key: fieldConfiguration.Id });
         }
 
-        public getFieldConfiguration(entityName: string, fieldName: string): ng.IPromise<string> {
+        public getFieldConfigurationTipology(entityName: string, fieldName: string): ng.IPromise<string> {
             var defer: ng.IDeferred<string> = this.$q.defer();
+
+            this.getFieldConfiguration(entityName, fieldName).then((data: models.IFieldConfiguration) => {
+                if (data != null) {
+                    defer.resolve(data.Tipology);
+                }
+                else {
+                    defer.resolve('');
+                }
+            }, (error) => {
+                defer.reject(error);
+            });
+
+            return defer.promise;
+        }
+
+        public getFieldValues(entityName: string, fieldName: string): ng.IPromise<Array<string>> {
+            var defer: ng.IDeferred<Array<string>> = this.$q.defer();
             var vm = this;
 
-            if (this.fieldConfigurations == null) {
-                vm.resource.query().$promise.then((data: any) => {
-                    vm.fieldConfigurations = data["value"];
-                    defer.resolve(vm.getFieldTipology(entityName, fieldName));
-                }, (error) => {
-                    defer.reject(error);
-                });
+            this.getFieldConfiguration(entityName, fieldName).then((data: models.IFieldConfiguration) => {
+                if (data != null && data.Values != null && data.Values != "") {
+                    defer.resolve(data.Values.split(";"));
+                }
+                else {
+                    defer.resolve(new Array<string>());
+                }
+
+            }, (error) => {
+                defer.reject(error);
+            });
+
+            if (this.fieldConfigurations) {
+
             }
             else {
-                defer.resolve(vm.getFieldTipology(entityName, fieldName));
+
             }
 
             return defer.promise;
         }
 
-        private getFieldTipology(entityName: string, fieldName: string): string {
-            var fieldConfigurations: Array<models.IFieldConfiguration> = this.$filter('filter')(this.fieldConfigurations, { 'Entity': entityName, 'Field': fieldName });
-            if (fieldConfigurations.length > 0) {
-                return fieldConfigurations[0].Tipology;
+        private getFieldConfiguration(entityName: string, fieldName: string): ng.IPromise<models.IFieldConfiguration> {
+            var defer: ng.IDeferred<models.IFieldConfiguration> = this.$q.defer();
+            var vm = this;
+
+            if (this.fieldConfigurations == null) {
+                vm.resource.query().$promise.then((data: any) => {
+                    vm.fieldConfigurations = data["value"];
+                    defer.resolve(vm.getField(entityName, fieldName));
+                }, (error) => {
+                    defer.reject(error);
+                });
             }
             else {
-                return '';
+                defer.resolve(vm.getField(entityName, fieldName));
+            }
+
+            return defer.promise;
+        }
+
+        private getField(entityName: string, fieldName: string): models.IFieldConfiguration {
+            var fieldConfigurations: Array<models.IFieldConfiguration> = this.$filter('filter')(this.fieldConfigurations, { 'Entity': entityName, 'Field': fieldName });
+            if (fieldConfigurations.length > 0) {
+                return fieldConfigurations[0];
+            }
+            else {
+                return null;
             }
         }
 

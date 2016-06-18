@@ -4,5 +4,6 @@ module AngularTablesDataManagerApp.Models {
         Entity: string;
         Field: string;
         Tipology: string;
+        Values: string;
     }
 }
