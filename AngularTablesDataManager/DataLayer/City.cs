@@ -8,5 +8,9 @@ namespace AngularTablesDataManager.DataLayer
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public Guid IdZip { get; set; }
+
+        [ForeignKey("IdZip")]
+        public virtual Zip Zip { get; set; }
     }
 }

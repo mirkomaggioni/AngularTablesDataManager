@@ -11,5 +11,7 @@ namespace AngularTablesDataManager.DataLayer
 
         public DbSet<City> Cities { get; set; }
         public DbSet<Zip> Zips { get; set; }
+
+        public System.Data.Entity.DbSet<AngularTablesDataManager.DataLayer.FieldConfiguration> FieldConfigurations { get; set; }
     }
 }

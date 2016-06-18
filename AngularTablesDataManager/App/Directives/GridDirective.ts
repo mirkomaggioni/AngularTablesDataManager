@@ -10,6 +10,7 @@ module AngularTablesDataManagerApp.Directives {
     }
 
     interface IGridDirectiveScope extends ng.IScope {
+        entityName: string;
         list: models.Grid;
         item: models.Row;
         rowModel: models.Row;
@@ -19,6 +20,7 @@ module AngularTablesDataManagerApp.Directives {
         Save(item: IGridItem): void;
         Delete(item: IGridItem): void;
         Close(): void;
+        GetEntityName(): string;
     }
 
     class GridController {
@@ -60,12 +62,17 @@ module AngularTablesDataManagerApp.Directives {
 
             this.$scope.item = null;
         }
+
+        public GetEntityName() {
+            return this.$scope.entityName;
+        }
     }
 
     export class GridDirective implements ng.IDirective {
         public restrict = 'E';
         public templateUrl = 'app/directives/grid.html';
         public scope = {
+            entityName: '=',
             list: '=',
             rowModel: '=',
             order: '@order',
@@ -137,6 +144,7 @@ module AngularTablesDataManagerApp.Directives {
         isNew: boolean;
 
         GetMetadataProperty(Name: string): models.MetadataProperty;
+        GetEntityName(): string;
         Save(): void;
         Delete(): void;
         Close(): void;
@@ -167,6 +175,10 @@ module AngularTablesDataManagerApp.Directives {
 
             scope.GetMetadataProperty = (Name: string) => {
                 return this.$filter('filter')(scope.metadata, { 'Name': Name })[0];
+            }
+
+            scope.GetEntityName = () => {
+                return gridCtrl.GetEntityName();
             }
         }
 

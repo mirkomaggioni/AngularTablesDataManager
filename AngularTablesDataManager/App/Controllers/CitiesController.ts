@@ -11,6 +11,7 @@ module AngularTablesDataManagerApp.Controllers {
     import services = AngularTablesDataManagerApp.Services;
 
     export class CitiesController {
+        entityName: string;
         grid: models.Grid;
         rowModel: models.Row;
         toaster: ngtoaster.IToasterService;
@@ -22,6 +23,7 @@ module AngularTablesDataManagerApp.Controllers {
             this.citiesService = CitiesService;
             this.constant = commons.Constants;
             this.toaster = toaster;
+            this.entityName = this.citiesService.entityName;
 
             this.grid = new models.Grid();
             this.grid.Title = 'Cities';

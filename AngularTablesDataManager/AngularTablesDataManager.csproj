@@ -168,7 +168,9 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controller\CitiesController.cs" />
+    <Compile Include="Controller\FieldConfigurationsController.cs" />
     <Compile Include="Controller\ZipsController.cs" />
+    <Compile Include="DataLayer\FieldConfiguration.cs" />
     <Compile Include="DataLayer\Zip.cs" />
     <Compile Include="DataLayer\City.cs" />
     <Compile Include="DataLayer\Context.cs" />
@@ -186,6 +188,10 @@
     <Compile Include="Migrations\201606081644059_RenamingZipTable.cs" />
     <Compile Include="Migrations\201606081644059_RenamingZipTable.Designer.cs">
       <DependentUpon>201606081644059_RenamingZipTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606151443292_CreatingFieldConfigurationTable.cs" />
+    <Compile Include="Migrations\201606151443292_CreatingFieldConfigurationTable.Designer.cs">
+      <DependentUpon>201606151443292_CreatingFieldConfigurationTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -209,6 +215,8 @@
     <TypeScriptCompile Include="App\Models\Grid.ts" />
     <TypeScriptCompile Include="App\Models\Services.ts" />
     <Content Include="App\Services\Entities\ZipsService.ts" />
+    <Content Include="App\Models\FieldConfigurations.ts" />
+    <Content Include="App\Services\Entities\FieldConfigurationsService.ts" />
     <TypeScriptCompile Include="App\Services\GridService.ts" />
     <TypeScriptCompile Include="App\Services\MetadataService.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />
@@ -236,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606081644059_RenamingZipTable.resx">
       <DependentUpon>201606081644059_RenamingZipTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606151443292_CreatingFieldConfigurationTable.resx">
+      <DependentUpon>201606151443292_CreatingFieldConfigurationTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

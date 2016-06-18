@@ -18,7 +18,7 @@
         <div class="panel-body">
           <div class="form-group" ng-repeat="property in item.Properties">
             <label for="{{property.Name}}">{{property.Name}}:</label>
-            <input field tipology="GetMetadataProperty(property.Name)" id="{{property.Name}}" class="form-control" ng-model="property.Value" ng-required="!property.Nullable" />
+            <input field entity-name="GetEntityName()" tipology="GetMetadataProperty(property.Name)" id="{{property.Name}}" class="form-control" ng-model="property.Value" ng-required="!property.Nullable" />
           </div>
         </div>
         <div class="col-md-2"></div>

@@ -14,6 +14,7 @@ var AngularTablesDataManagerApp;
                 this.citiesService = CitiesService;
                 this.constant = commons.Constants;
                 this.toaster = toaster;
+                this.entityName = this.citiesService.entityName;
                 this.grid = new models.Grid();
                 this.grid.Title = 'Cities';
                 this.Load();

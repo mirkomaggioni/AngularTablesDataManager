@@ -34,6 +34,9 @@ var AngularTablesDataManagerApp;
                 }
                 this.$scope.item = null;
             };
+            GridController.prototype.GetEntityName = function () {
+                return this.$scope.entityName;
+            };
             return GridController;
         }());
         var GridDirective = (function () {
@@ -41,6 +44,7 @@ var AngularTablesDataManagerApp;
                 this.restrict = 'E';
                 this.templateUrl = 'app/directives/grid.html';
                 this.scope = {
+                    entityName: '=',
                     list: '=',
                     rowModel: '=',
                     order: '@order',
@@ -133,6 +137,9 @@ var AngularTablesDataManagerApp;
                     };
                     scope.GetMetadataProperty = function (Name) {
                         return _this.$filter('filter')(scope.metadata, { 'Name': Name })[0];
+                    };
+                    scope.GetEntityName = function () {
+                        return gridCtrl.GetEntityName();
                     };
                 };
                 this.$filter = $filter;
