@@ -143,6 +143,10 @@
     <Content Include="App\Directives\GridList.html" />
     <Content Include="App\Directives\GridItem.html" />
     <Content Include="App\Directives\GridRow.html" />
+    <Content Include="App\Directives\InputNumber.html" />
+    <Content Include="App\Directives\InputRadio.html" />
+    <Content Include="App\Directives\InputText.html" />
+    <Content Include="App\Directives\InputSelect.html" />
     <Content Include="App\Views\Zips.html" />
     <Content Include="Global.asax" />
     <Content Include="Index.dev.html" />
