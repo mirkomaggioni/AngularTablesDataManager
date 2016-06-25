@@ -15,19 +15,25 @@ module AngularTablesDataManagerApp.Directives {
         item: models.Row;
         rowModel: models.Row;
         newItem: boolean;
+        fieldItems: Array<models.FieldItems>;
 
         New(): void;
         Save(item: IGridItem): void;
         Delete(item: IGridItem): void;
         Close(): void;
         GetEntityName(): string;
+        GetFieldItems(fieldName: string): Array<models.FieldItem>;
+        IsVisiblePropertyInGrid(property: models.RowProperty): boolean;
+        IsVisiblePropertyInDetail(fieldName: string): boolean;
     }
 
     class GridController {
         $scope: IGridDirectiveScope;
+        $filter: ng.IFilterService;
 
-        constructor($scope: IGridDirectiveScope) {
+        constructor($scope: IGridDirectiveScope, $filter: ng.IFilterService) {
             this.$scope = $scope;
+            this.$filter = $filter;
         }
 
         public Edit(item: models.Row) {
@@ -66,6 +72,23 @@ module AngularTablesDataManagerApp.Directives {
         public GetEntityName() {
             return this.$scope.entityName;
         }
+
+        public GetFieldItems(fieldName: string) {
+            if (this.$filter('filter')(this.$scope.fieldItems, { 'FieldName': fieldName }, true).length > 0) {
+                return this.$filter('filter')(this.$scope.fieldItems, { 'FieldName': fieldName }, true)[0].FieldItems;
+            }
+            else {
+                return null;
+            }
+        }
+
+        public IsVisiblePropertyInGrid(property: models.RowProperty) {
+            return this.$filter('filter')(this.$scope.list.Columns, { 'Name': property.Name }, true)[0].ShowedInGrid;
+        }
+
+        public IsVisiblePropertyInDetail(property: models.RowProperty) {
+            return this.$filter('filter')(this.$scope.list.Columns, { 'Name': property.Name }, true)[0].ShowedInDetail;
+        }
     }
 
     export class GridDirective implements ng.IDirective {
@@ -75,6 +98,7 @@ module AngularTablesDataManagerApp.Directives {
             entityName: '=',
             list: '=',
             rowModel: '=',
+            fieldItems: '=',
             order: '@order',
             New: '&new',
             Save: '&save',
@@ -114,6 +138,7 @@ module AngularTablesDataManagerApp.Directives {
     interface IGridRowDirectiveScope extends ng.IScope {
         gridRow: models.Row;
         Edit(): void;
+        IsVisibleProperty(property: models.RowProperty): boolean;
     }
 
     export class GridRowDirective implements ng.IDirective {
@@ -126,6 +151,10 @@ module AngularTablesDataManagerApp.Directives {
         public link = (scope: IGridRowDirectiveScope, element: ng.IAugmentedJQuery, attrs: IArguments, gridCtrl: GridController) => {
             scope.Edit = () => {
                 gridCtrl.Edit(scope.gridRow);
+            }
+
+            scope.IsVisibleProperty = (property: models.RowProperty) => {
+                return gridCtrl.IsVisiblePropertyInGrid(property);
             }
         }
     }
@@ -145,9 +174,11 @@ module AngularTablesDataManagerApp.Directives {
 
         GetMetadataProperty(Name: string): models.MetadataProperty;
         GetEntityName(): string;
+        GetFieldItems(fieldName: string): Array<models.FieldItem>;
         Save(): void;
         Delete(): void;
         Close(): void;
+        IsVisibleProperty(property: models.RowProperty): boolean;
     }
 
     export class GridItemDirective implements ng.IDirective {
@@ -174,11 +205,19 @@ module AngularTablesDataManagerApp.Directives {
             }
 
             scope.GetMetadataProperty = (Name: string) => {
-                return this.$filter('filter')(scope.metadata, { 'Name': Name })[0];
+                return this.$filter('filter')(scope.metadata, { 'Name': Name }, true)[0];
             }
 
             scope.GetEntityName = () => {
                 return gridCtrl.GetEntityName();
+            }
+
+            scope.GetFieldItems = (fieldName: string) => {
+                return gridCtrl.GetFieldItems(fieldName);
+            }
+
+            scope.IsVisibleProperty = (property: models.RowProperty) => {
+                return gridCtrl.IsVisiblePropertyInDetail(property);
             }
         }
 
@@ -187,7 +226,7 @@ module AngularTablesDataManagerApp.Directives {
         }
     }
 
-    AngularTablesDataManager.module.directive('grid', () => new Directives.GridDirective);
+    AngularTablesDataManager.module.directive('grid', () => new Directives.GridDirective());
     AngularTablesDataManager.module.directive('gridList', () => new Directives.GridListDirective());
     AngularTablesDataManager.module.directive('gridColumn', () => new Directives.GridColumnDirective);
     AngularTablesDataManager.module.directive('gridRow', () => new Directives.GridRowDirective);

@@ -10,7 +10,8 @@ module AngularTablesDataManagerApp.Directives {
         contentUrl: string;
         tipology: models.MetadataProperty;
         property: models.RowProperty;
-        values: Array<string>;
+        fieldItems: Array<models.FieldItem>;
+        values: Array<models.FieldItem>;
     }
 
     export class FieldDirective implements ng.IDirective {
@@ -19,16 +20,29 @@ module AngularTablesDataManagerApp.Directives {
         public scope = {
             entityName: '=',
             tipology: '=',
-            property: '='
+            property: '=',
+            fieldItems: '='
         };
         public template = '<ng-include src="contentUrl" />';
         public link = (scope: IFieldDirectiveScope, element: JQuery, attrs: IArguments) => {
+            scope.values = new Array<models.FieldItem>();
+
+            if (scope.fieldItems != null) {
+                for (var i = 0; i < scope.fieldItems.length; i++) {
+                    scope.values.push(scope.fieldItems[i]);
+                }
+            }
+
+            var tipology: string = scope.tipology.Type;
             this.fieldConfigurationsService.getFieldConfigurationTipology(scope.entityName, scope.tipology.Name).then((data: string) => {
-                var tipology: string = scope.tipology.Type;
                 if (data != "") {
                     tipology = data;
                     this.fieldConfigurationsService.getFieldValues(scope.entityName, scope.tipology.Name).then((data: Array<string>) => {
-                        scope.values = data;
+                        for (var i = 0; i < data.length; i++) {
+                            var item: models.FieldItem = new models.FieldItem(data[i], data[i]);
+                            scope.values.push(item);
+                        }
+
                         this.openView(scope, tipology);
                     });
                 }

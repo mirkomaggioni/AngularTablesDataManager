@@ -13,6 +13,7 @@ module AngularTablesDataManagerApp.Services {
 
     export interface IZipsResourceClass extends ngr.IResourceClass<ngr.IResource<models.IZip>> {
         create(zip: models.IZip): ngr.IResource<models.IZip>;
+        getAll(): Array<models.IZip>;
     }
 
     export class ZipsService extends services.GridService {
@@ -51,7 +52,19 @@ module AngularTablesDataManagerApp.Services {
             return this.resource.delete({ key: zip.Id });
         }
 
-        public getGridData(Columns: Array<models.MetadataProperty>): ng.IPromise<Array<models.Row>> {
+        public getAll() {
+            var defer: ng.IDeferred<Array<models.IZip>> = this.$q.defer();
+
+            this.resource.query().$promise.then((data: any) => {
+                return defer.resolve(<Array<models.IZip>>data["value"]);
+            }, (error) => {
+                return defer.reject(error);
+            });
+
+            return defer.promise;
+        }
+
+        public getGridData(Columns: Array<models.MetadataProperty>) {
             var datas: Array<models.IZip>;
             var defer: ng.IDeferred<any> = this.$q.defer();
 
@@ -66,7 +79,7 @@ module AngularTablesDataManagerApp.Services {
             return defer.promise;
         }
 
-        public createGridData(Columns: Array<models.MetadataProperty>): models.Row {
+        public createGridData(Columns: Array<models.MetadataProperty>) {
             var entity: models.IZip = { Id: commons.Constants.GuidEmpty, Code: null };
 
             return super.createData(Columns, entity);

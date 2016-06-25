@@ -4,6 +4,7 @@ var AngularTablesDataManagerApp;
 (function (AngularTablesDataManagerApp) {
     var Directives;
     (function (Directives) {
+        var models = AngularTablesDataManagerApp.Models;
         var FieldDirective = (function () {
             function FieldDirective(fieldConfigurationService) {
                 var _this = this;
@@ -11,16 +12,26 @@ var AngularTablesDataManagerApp;
                 this.scope = {
                     entityName: '=',
                     tipology: '=',
-                    property: '='
+                    property: '=',
+                    fieldItems: '='
                 };
                 this.template = '<ng-include src="contentUrl" />';
                 this.link = function (scope, element, attrs) {
+                    scope.values = new Array();
+                    if (scope.fieldItems != null) {
+                        for (var i = 0; i < scope.fieldItems.length; i++) {
+                            scope.values.push(scope.fieldItems[i]);
+                        }
+                    }
+                    var tipology = scope.tipology.Type;
                     _this.fieldConfigurationsService.getFieldConfigurationTipology(scope.entityName, scope.tipology.Name).then(function (data) {
-                        var tipology = scope.tipology.Type;
                         if (data != "") {
                             tipology = data;
                             _this.fieldConfigurationsService.getFieldValues(scope.entityName, scope.tipology.Name).then(function (data) {
-                                scope.values = data;
+                                for (var i = 0; i < data.length; i++) {
+                                    var item = new models.FieldItem(data[i], data[i]);
+                                    scope.values.push(item);
+                                }
                                 _this.openView(scope, tipology);
                             });
                         }

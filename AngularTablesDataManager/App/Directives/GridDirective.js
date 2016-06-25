@@ -6,8 +6,9 @@ var AngularTablesDataManagerApp;
     (function (Directives) {
         var models = AngularTablesDataManagerApp.Models;
         var GridController = (function () {
-            function GridController($scope) {
+            function GridController($scope, $filter) {
                 this.$scope = $scope;
+                this.$filter = $filter;
             }
             GridController.prototype.Edit = function (item) {
                 this.$scope.item = item;
@@ -37,6 +38,20 @@ var AngularTablesDataManagerApp;
             GridController.prototype.GetEntityName = function () {
                 return this.$scope.entityName;
             };
+            GridController.prototype.GetFieldItems = function (fieldName) {
+                if (this.$filter('filter')(this.$scope.fieldItems, { 'FieldName': fieldName }, true).length > 0) {
+                    return this.$filter('filter')(this.$scope.fieldItems, { 'FieldName': fieldName }, true)[0].FieldItems;
+                }
+                else {
+                    return null;
+                }
+            };
+            GridController.prototype.IsVisiblePropertyInGrid = function (property) {
+                return this.$filter('filter')(this.$scope.list.Columns, { 'Name': property.Name }, true)[0].ShowedInGrid;
+            };
+            GridController.prototype.IsVisiblePropertyInDetail = function (property) {
+                return this.$filter('filter')(this.$scope.list.Columns, { 'Name': property.Name }, true)[0].ShowedInDetail;
+            };
             return GridController;
         }());
         var GridDirective = (function () {
@@ -47,6 +62,7 @@ var AngularTablesDataManagerApp;
                     entityName: '=',
                     list: '=',
                     rowModel: '=',
+                    fieldItems: '=',
                     order: '@order',
                     New: '&new',
                     Save: '&save',
@@ -98,6 +114,9 @@ var AngularTablesDataManagerApp;
                     scope.Edit = function () {
                         gridCtrl.Edit(scope.gridRow);
                     };
+                    scope.IsVisibleProperty = function (property) {
+                        return gridCtrl.IsVisiblePropertyInGrid(property);
+                    };
                 };
             }
             return GridRowDirective;
@@ -136,10 +155,16 @@ var AngularTablesDataManagerApp;
                         gridCtrl.Close();
                     };
                     scope.GetMetadataProperty = function (Name) {
-                        return _this.$filter('filter')(scope.metadata, { 'Name': Name })[0];
+                        return _this.$filter('filter')(scope.metadata, { 'Name': Name }, true)[0];
                     };
                     scope.GetEntityName = function () {
                         return gridCtrl.GetEntityName();
+                    };
+                    scope.GetFieldItems = function (fieldName) {
+                        return gridCtrl.GetFieldItems(fieldName);
+                    };
+                    scope.IsVisibleProperty = function (property) {
+                        return gridCtrl.IsVisiblePropertyInDetail(property);
                     };
                 };
                 this.$filter = $filter;
@@ -147,7 +172,7 @@ var AngularTablesDataManagerApp;
             return GridItemDirective;
         }());
         Directives.GridItemDirective = GridItemDirective;
-        AngularTablesDataManagerApp.AngularTablesDataManager.module.directive('grid', function () { return new Directives.GridDirective; });
+        AngularTablesDataManagerApp.AngularTablesDataManager.module.directive('grid', function () { return new Directives.GridDirective(); });
         AngularTablesDataManagerApp.AngularTablesDataManager.module.directive('gridList', function () { return new Directives.GridListDirective(); });
         AngularTablesDataManagerApp.AngularTablesDataManager.module.directive('gridColumn', function () { return new Directives.GridColumnDirective; });
         AngularTablesDataManagerApp.AngularTablesDataManager.module.directive('gridRow', function () { return new Directives.GridRowDirective; });

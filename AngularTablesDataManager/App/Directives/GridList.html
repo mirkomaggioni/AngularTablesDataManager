@@ -16,7 +16,7 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th ng-repeat="column in list.Columns" grid-column="column"></th>
+              <th ng-repeat="column in list.Columns | filter: { ShowedInGrid: true }" grid-column="column"></th>
             </tr>
           </thead>
           <tbody>

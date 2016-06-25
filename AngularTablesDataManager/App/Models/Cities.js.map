@@ -1,1 +1,1 @@
-{"version":3,"sources":["Models/Cities.ts"],"names":[],"mappings":"AAKC","file":"Cities.js","sourcesContent":["\r\nmodule AngularTablesDataManagerApp.Models {\r\n    export interface ICity extends Models.IEntity {\r\n        Name: string;\r\n    }\r\n}\r\n"]}
+{"version":3,"sources":["Models/Cities.ts"],"names":[],"mappings":"AAAA,oCAAoC;AAMnC","file":"Cities.js","sourcesContent":["/// <reference path=\"services.ts\" />\r\n\r\nmodule AngularTablesDataManagerApp.Models {\r\n    export interface ICity extends Models.IEntity {\r\n        Name: string;\r\n    }\r\n}\r\n"]}

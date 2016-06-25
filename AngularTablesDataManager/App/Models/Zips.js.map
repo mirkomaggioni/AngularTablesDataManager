@@ -1,1 +1,1 @@
-{"version":3,"sources":["Models/Zips.ts"],"names":[],"mappings":"AAKC","file":"Zips.js","sourcesContent":["\r\nmodule AngularTablesDataManagerApp.Models {\r\n    export interface IZip extends Models.IEntity {\r\n        Code: number;\r\n    }\r\n}\r\n"]}
+{"version":3,"sources":["Models/Zips.ts"],"names":[],"mappings":"AAAA,oCAAoC;AAMnC","file":"Zips.js","sourcesContent":["/// <reference path=\"services.ts\" />\r\n\r\nmodule AngularTablesDataManagerApp.Models {\r\n    export interface IZip extends Models.IEntity {\r\n        Code: number;\r\n    }\r\n}\r\n"]}

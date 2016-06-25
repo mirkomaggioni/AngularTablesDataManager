@@ -24,11 +24,9 @@ var AngularTablesDataManagerApp;
                     var xml = $(xmlDoc);
                     var properties = new Array();
                     xml.find('EntityType[Name="' + entityName + '"]').find('Property').each(function () {
-                        if (vm.$filter('filter')(columns, { $: $(this).attr('Name') }).length > 0) {
-                            var metadataProperty = new models.MetadataProperty();
-                            metadataProperty.Name = $(this).attr('Name');
-                            metadataProperty.Type = $(this).attr('Type');
-                            metadataProperty.Nullable = ($(this).attr('Nullable') != null) && ($(this).attr('Nullable').toLowerCase() == 'true');
+                        if (vm.$filter('filter')(columns, { 'Name': $(this).attr('Name') }, true).length > 0) {
+                            var column = vm.$filter('filter')(columns, { 'Name': $(this).attr('Name') }, true)[0];
+                            var metadataProperty = new models.MetadataProperty($(this).attr('Name'), $(this).attr('Type'), ($(this).attr('Nullable') != null) && ($(this).attr('Nullable').toLowerCase() == 'true'), column.ShowedInGrid, column.ShowedInDetail);
                             properties.push(metadataProperty);
                         }
                     });

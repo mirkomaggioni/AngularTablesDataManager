@@ -116,7 +116,7 @@ module AngularTablesDataManagerApp.Services {
         }
 
         private getField(entityName: string, fieldName: string): models.IFieldConfiguration {
-            var fieldConfigurations: Array<models.IFieldConfiguration> = this.$filter('filter')(this.fieldConfigurations, { 'Entity': entityName, 'Field': fieldName });
+            var fieldConfigurations: Array<models.IFieldConfiguration> = this.$filter('filter')(this.fieldConfigurations, { 'Entity': entityName, 'Field': fieldName }, true);
             if (fieldConfigurations.length > 0) {
                 return fieldConfigurations[0];
             }

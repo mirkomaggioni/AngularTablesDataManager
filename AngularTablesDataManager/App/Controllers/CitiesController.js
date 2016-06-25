@@ -10,31 +10,46 @@ var AngularTablesDataManagerApp;
         var commons = AngularTablesDataManagerApp.Commons;
         var models = AngularTablesDataManagerApp.Models;
         var CitiesController = (function () {
-            function CitiesController(toaster, CitiesService) {
+            function CitiesController(toaster, CitiesService, ZipsService) {
                 this.citiesService = CitiesService;
+                this.zipsService = ZipsService;
                 this.constant = commons.Constants;
                 this.toaster = toaster;
                 this.entityName = this.citiesService.entityName;
                 this.grid = new models.Grid();
+                this.fieldItems = new Array();
                 this.grid.Title = 'Cities';
                 this.Load();
             }
             CitiesController.prototype.Load = function () {
                 var _this = this;
-                var columns = new Array('Name');
+                var columns = new Array();
+                var column = new models.Column('Name', true, true);
+                columns.push(column);
+                column = new models.Column('IdZip', false, true);
+                columns.push(column);
                 var vm = this;
-                this.citiesService.getMetadata(columns).then(function (data) {
-                    vm.grid.Columns = data;
-                    vm.rowModel = _this.citiesService.createGridData(data);
-                    _this.citiesService.getGridData(data).then(function (data) {
-                        vm.grid.Rows = data;
-                        vm.toaster.success('Cities loaded successfully.');
-                        return;
+                this.zipsService.getAll().then(function (data) {
+                    var zips = new models.FieldItems('IdZip');
+                    for (var i = 0; i < data.length; i++) {
+                        zips.FieldItems.push(new models.FieldItem(data[i].Id, data[i].Code.toString()));
+                    }
+                    vm.fieldItems.push(zips);
+                    vm.citiesService.getMetadata(columns).then(function (data) {
+                        vm.grid.Columns = data;
+                        vm.rowModel = _this.citiesService.createGridData(data);
+                        vm.citiesService.getGridData(data).then(function (data) {
+                            vm.grid.Rows = data;
+                            vm.toaster.success('Cities loaded successfully.');
+                            return;
+                        }, function (error) {
+                            vm.toaster.error('Error loading cities', error.message);
+                        });
                     }, function (error) {
-                        vm.toaster.error('Error loading cities', error.message);
+                        vm.toaster.error('Error loading cities metadata', error.data.message);
                     });
                 }, function (error) {
-                    vm.toaster.error('Error loading cities metadata', error.data.message);
+                    vm.toaster.error('Error loading zips metadata', error.data.message);
                 });
             };
             CitiesController.prototype.Save = function (item) {

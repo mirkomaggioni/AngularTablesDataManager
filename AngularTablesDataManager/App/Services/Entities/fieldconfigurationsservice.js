@@ -86,7 +86,7 @@ var AngularTablesDataManagerApp;
                 return defer.promise;
             };
             FieldConfigurationsService.prototype.getField = function (entityName, fieldName) {
-                var fieldConfigurations = this.$filter('filter')(this.fieldConfigurations, { 'Entity': entityName, 'Field': fieldName });
+                var fieldConfigurations = this.$filter('filter')(this.fieldConfigurations, { 'Entity': entityName, 'Field': fieldName }, true);
                 if (fieldConfigurations.length > 0) {
                     return fieldConfigurations[0];
                 }

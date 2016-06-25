@@ -43,6 +43,15 @@ var AngularTablesDataManagerApp;
             ZipsService.prototype.delete = function (zip) {
                 return this.resource.delete({ key: zip.Id });
             };
+            ZipsService.prototype.getAll = function () {
+                var defer = this.$q.defer();
+                this.resource.query().$promise.then(function (data) {
+                    return defer.resolve(data["value"]);
+                }, function (error) {
+                    return defer.reject(error);
+                });
+                return defer.promise;
+            };
             ZipsService.prototype.getGridData = function (Columns) {
                 var _this = this;
                 var datas;

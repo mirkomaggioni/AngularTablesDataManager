@@ -12,6 +12,7 @@ module AngularTablesDataManagerApp.Controllers {
 
     export class ZipsController {
         grid: models.Grid;
+        fieldItems: Array<models.FieldItems>;
         rowModel: models.Row;
         toaster: ngtoaster.IToasterService;
 
@@ -24,12 +25,16 @@ module AngularTablesDataManagerApp.Controllers {
             this.toaster = toaster;
 
             this.grid = new models.Grid();
+            this.fieldItems = new Array<models.FieldItems>();
             this.grid.Title = 'Zips';
             this.Load();
         }
 
         private Load() {
-            var columns: Array<string> = new Array<string>('Code');
+            var columns: Array<models.Column> = new Array<models.Column>();
+            var column: models.Column = new models.Column('Code', true, true);
+            columns.push(column);
+
             var vm = this;
 
             this.zipsService.getMetadata(columns).then((data) => {

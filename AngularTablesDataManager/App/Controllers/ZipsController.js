@@ -15,12 +15,15 @@ var AngularTablesDataManagerApp;
                 this.constant = commons.Constants;
                 this.toaster = toaster;
                 this.grid = new models.Grid();
+                this.fieldItems = new Array();
                 this.grid.Title = 'Zips';
                 this.Load();
             }
             ZipsController.prototype.Load = function () {
                 var _this = this;
-                var columns = new Array('Code');
+                var columns = new Array();
+                var column = new models.Column('Code', true, true);
+                columns.push(column);
                 var vm = this;
                 this.zipsService.getMetadata(columns).then(function (data) {
                     vm.grid.Columns = data;

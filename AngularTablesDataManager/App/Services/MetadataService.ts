@@ -16,7 +16,7 @@ module AngularTablesDataManagerApp.Services {
             this.$filter = $filter;
         }
 
-        public getMetadata(entityName: string, columns: Array<string>): ng.IPromise<Array<models.MetadataProperty>> {
+        public getMetadata(entityName: string, columns: Array<models.Column>): ng.IPromise<Array<models.MetadataProperty>> {
             var defer: ng.IDeferred<any> = this.$q.defer();
 
             var req = {
@@ -32,12 +32,15 @@ module AngularTablesDataManagerApp.Services {
                 var properties: Array<models.MetadataProperty> = new Array<models.MetadataProperty>();
 
                 xml.find('EntityType[Name="'+ entityName +'"]').find('Property').each(function () {
-                    if (vm.$filter('filter')(columns, { $: $(this).attr('Name') }).length > 0) {
-                        var metadataProperty: models.MetadataProperty = new models.MetadataProperty();
-                        metadataProperty.Name = $(this).attr('Name');
-                        metadataProperty.Type = $(this).attr('Type');
-                        metadataProperty.Nullable = ($(this).attr('Nullable') != null) && ($(this).attr('Nullable').toLowerCase() == 'true');
+                    if (vm.$filter('filter')(columns, { 'Name': $(this).attr('Name') }, true).length > 0) {
+                        var column: models.Column = vm.$filter('filter')(columns, { 'Name': $(this).attr('Name') }, true)[0];
 
+                        var metadataProperty: models.MetadataProperty = new models.MetadataProperty(
+                            $(this).attr('Name'),
+                            $(this).attr('Type'),
+                            ($(this).attr('Nullable') != null) && ($(this).attr('Nullable').toLowerCase() == 'true'),
+                            column.ShowedInGrid,
+                            column.ShowedInDetail);
                         properties.push(metadataProperty);
                     }                
                 });

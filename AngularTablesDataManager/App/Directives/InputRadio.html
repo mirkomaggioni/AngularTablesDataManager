@@ -1,6 +1,6 @@
 ﻿
 <div class="radio">
   <label class="radio-inline" ng-repeat="value in values">
-    <input type="radio" name="gender" value="{{value}}" ng-checked="value == property.Value" ng-model="property.Value"> {{value}}
+    <input type="radio" name="gender" value="{{value.Id}}" ng-checked="value.Id == property.Value" ng-model="property.Value"> {{value.Value}}
   </label>
 </div>

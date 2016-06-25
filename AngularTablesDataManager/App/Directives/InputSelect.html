@@ -1,4 +1,4 @@
 ﻿
 <select class="form-control" ng-model="property.Value">
-  <option ng-repeat="value in values" value="{{value}}" ng-selected="value == property.Value">{{value}}</option>
+  <option ng-repeat="value in values | orderBy: 'Value'" value="{{value.Id}}" ng-selected="value.Id == property.Value">{{value.Value}}</option>
 </select>

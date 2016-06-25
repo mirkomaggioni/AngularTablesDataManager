@@ -16,9 +16,9 @@
           </div>
         </div>
         <div class="panel-body">
-          <div class="form-group" ng-repeat="property in item.Properties">
+          <div class="form-group" ng-repeat="property in item.Properties | filter: IsVisibleProperty">
             <label for="{{property.Name}}">{{property.Name}}:</label>
-            <field entity-name="GetEntityName()" tipology="GetMetadataProperty(property.Name)" property="property" />
+            <field entity-name="GetEntityName()" tipology="GetMetadataProperty(property.Name)" property="property" field-items="GetFieldItems(property.Name)" />
           </div>
         </div>
         <div class="col-md-2"></div>

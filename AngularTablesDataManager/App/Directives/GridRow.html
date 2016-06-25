@@ -1,3 +1,3 @@
 ﻿
-<td ng-repeat="cell in gridRow.Properties" grid-cell="cell" ng-click="Edit()"></td>
+<td ng-repeat="cell in gridRow.Properties | filter: IsVisibleProperty" grid-cell="cell" ng-click="Edit()"></td>
 
