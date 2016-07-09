@@ -3,6 +3,7 @@
 /// <reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
 /// <reference path="../models/grid.ts" />
 /// <reference path="../services/entities/citiesservice.ts" />
+/// <reference path="../services/entities/zipsservice.ts" />
 var AngularTablesDataManagerApp;
 (function (AngularTablesDataManagerApp) {
     var Controllers;
